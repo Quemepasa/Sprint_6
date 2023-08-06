@@ -17,7 +17,7 @@ public class LionTest {
     private final String sex;
     private final Object expectedResult;
 
-    public LionTest(String sex, boolean expectedResult) {
+    public LionTest(String sex, Object expectedResult) {
         this.sex = sex;
         this.expectedResult = expectedResult;
     }
@@ -35,8 +35,9 @@ public class LionTest {
         Feline feline = new Feline();
         try {
             lion = new Lion(sex, feline);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (Exception exception) {
+            String textException = "Используйте допустимые значения пола животного - самец или самка";
+            Assert.assertEquals(textException, exception.getMessage());
         }
     }
 
@@ -51,6 +52,17 @@ public class LionTest {
     public void doesHaveManeTest() {
         boolean actualResult = lion.doesHaveMane();
         assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void doesHaveManeTest1() {
+        Feline feline = new Feline();
+        try {
+            lion = new Lion("Не опознан", feline);
+        } catch (Exception exception) {
+            String textException = "Используйте допустимые значения пола животного - самец или самка";
+            Assert.assertEquals(textException, exception.getMessage());
+        }
     }
 
     @Test
